@@ -18,8 +18,9 @@ public class CarController {
     private CarDao carDao;
 
     @PostMapping(value="/car")
-    public void saveTest(String maker, String model, Integer price) throws Exception {
+    public void saveTest(Integer id, String maker, String model, Integer price) throws Exception {
         Car car = new Car();
+        car.setId(id);
         car.setMaker(maker);
         car.setModel(model);
         car.setPrice(price);

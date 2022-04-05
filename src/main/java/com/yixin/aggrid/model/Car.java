@@ -1,9 +1,18 @@
 package com.yixin.aggrid.model;
 
 public class Car {
+    private Integer id;
     private String maker;
     private String model;
     private Integer price;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getMaker() {
         return maker;

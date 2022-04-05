@@ -16,7 +16,8 @@ const App = () => {
     const gridRef = useRef(null);
 
     const [columnDefs] = useState([
-        {field: "make", editable: true},
+        {field: "id", editable: false},
+        {field: "maker", editable: true},
         {field: "model", editable: true},
         {field: "price", editable: true},
     ]);
@@ -29,25 +30,27 @@ const App = () => {
     //     };
     // }, []);
 
-    useEffect(() => {
-        fetch('https://www.ag-grid.com/example-assets/small-row-data.json')
-            .then(
-                result => result.json()
-            )
-            .then(rowData => setRowData(rowData))
-    }, []);
-
     // useEffect(() => {
-    //         axios.get('http://localhost:8080/car')
-    //         .then((response) => {
-    //             console.log(response)
-    //         })
+    //     fetch('https://www.ag-grid.com/example-assets/small-row-data.json')
+    //         .then(
+    //             result => result.json()
+    //         )
+    //         .then(rowData => setRowData(rowData))
     // }, []);
+
+    useEffect(() => {
+            axios.get('http://localhost:8080/car')
+            .then((resp) => {
+                console.log(resp)
+                console.log(resp.data)
+                setRowData(resp.data)
+            })
+    }, []);
 
     const onButtonClick = e => {
         const selectedNodes = gridRef.current.api.getSelectedNodes()
         const selectedData = selectedNodes.map(node => node.data)
-        const selectedDataStringPresentation = selectedData.map(node => `${node.make} ${node.model} ${node.price}`).join(', ')
+        const selectedDataStringPresentation = selectedData.map(node => `${node.id} ${node.maker} ${node.model} ${node.price}`).join(', ')
         alert(`Selected nodes: ${selectedDataStringPresentation}`)
     }
 
@@ -76,7 +79,7 @@ const App = () => {
     // }, []);
 
     return (
-        <div className="ag-theme-alpine" style={{height: 400, width: 600}}>
+        <div className="ag-theme-alpine" style={{height: 1000, width: 1000}}>
             <button onClick={onButtonClick}>Get selected rows</button>
             {/*<button onClick={onBtStartEditing}>edit (0)</button>*/}
             <button onClick={onBtStopEditing}>stop ()</button>
