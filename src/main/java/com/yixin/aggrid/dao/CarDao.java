@@ -51,14 +51,14 @@ public class CarDao {
     /**
      * Update
      */
-//    public void updateTest(MongoTest test) {
-//        Query query=new Query(Criteria.where("id").is(test.getId()));
-//        Update update= new Update().set("age", test.getAge()).set("name", test.getName());
-//        //update first result
-//        mongoTemplate.updateFirst(query,update,MongoTest.class);
-//        //update all result
-//        // mongoTemplate.updateMulti(query,update,TestEntity.class);
-//    }
+    public void updateCar(Car car) {
+        Query query = new Query(Criteria.where("_id").is(car.getId()));
+        Update update= new Update().set("maker", car.getMaker()).set("model", car.getModel()).set("price", car.getPrice());
+        //update first result
+        mongoTemplate.updateFirst(query,update,Car.class);
+        //update all result
+        // mongoTemplate.updateMulti(query,update,TestEntity.class);
+    }
 
     /**
      * Delete

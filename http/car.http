@@ -11,9 +11,13 @@ GET http://localhost:8080/car
 
 ###
 
-PUT http://localhost:8080/person
+PUT http://localhost:8080/car
+Content-Type: application/json
 
-name=John
+{"id": 2,
+  "maker": "Ford",
+  "model": "Mondeo2",
+  "price": 40002}
 
 ###
 

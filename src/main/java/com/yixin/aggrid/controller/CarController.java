@@ -2,6 +2,7 @@ package com.yixin.aggrid.controller;
 
 import com.yixin.aggrid.dao.CarDao;
 import com.yixin.aggrid.model.Car;
+import com.yixin.aggrid.req.CarSaveReq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,15 @@ public class CarController {
         return listCar;
     }
 
-//    @PutMapping(value="/person")
-//    public void updateTest(String name){
-//        MongoTest mgtest=new MongoTest();
-//        mgtest.setId(11);
-//        mgtest.setAge(44);
-//        mgtest.setName(name);
-//        mtdao.updateTest(mgtest);
-//    }
+    @PutMapping(value="/car")
+    public void updateTest(@RequestBody CarSaveReq req){
+        Car car = new Car();
+        car.setId(req.getId());
+        car.setMaker(req.getMaker());
+        car.setModel(req.getModel());
+        car.setPrice(req.getPrice());
+        carDao.updateCar(car);
+    }
 
     @DeleteMapping (value="/car/{id}")
     public void deleteCarById(@PathVariable Integer id){

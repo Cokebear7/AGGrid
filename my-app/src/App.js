@@ -66,12 +66,19 @@ const App = () => {
         gridRef.current.api.stopEditing();
     }, []);
 
-    // const onBtSave = useCallback(() => {
-    //     gridRef.current.api.stopEditing();
-    //     const selectedNodes = gridRef.current.api.getSelectedNodes()
-    //     const selectedData = selectedNodes.map(node => node.data)
-    //     console.log(selectedData[0])
-    // }, []);
+    const onBtSave = useCallback(() => {
+        gridRef.current.api.stopEditing();
+        const selectedNodes = gridRef.current.api.getSelectedNodes()
+        const selectedData = selectedNodes.map(node => node.data)
+        console.log(selectedData[0])
+        axios.put('http://localhost:8080/car',
+            {
+                id: selectedData[0].id,
+                maker: selectedData[0].maker,
+                model: selectedData[0].model,
+                price: selectedData[0].price
+            })
+    }, []);
 
     const onBtDeleteRow = e => {
         const selectedNodes = gridRef.current.api.getSelectedNodes()
@@ -111,7 +118,7 @@ const App = () => {
             <button onClick={onButtonClick}>Get selected rows</button>
             {/*<button onClick={onBtStartEditing}>edit (0)</button>*/}
             <button onClick={onBtStopEditing}>stop ()</button>
-            {/*<button onClick={onBtSave}>Save Changes</button>*/}
+            <button onClick={onBtSave}>Save Changes</button>
             <button onClick={onBtDeleteRow}>Delete Selected Row</button>
             <AgGridReact
                 ref={gridRef}
