@@ -20,3 +20,7 @@ name=John
 DELETE http://localhost:8080/car/624922a13575d24762176132
 
 ###
+
+DELETE http://localhost:8080/car/2
+
+###

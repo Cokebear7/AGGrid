@@ -63,8 +63,9 @@ public class CarDao {
     /**
      * Delete
      */
-    public void deleteCarById(String id) {
-        Query query = new Query(Criteria.where("_id").is(new ObjectId(id)));
+    public void deleteCarById(Integer id) {
+//        Query query = new Query(Criteria.where("_id").is(new ObjectId(id)));
+        Query query = new Query(Criteria.where("_id").is(id));
         mongoTemplate.remove(query,Car.class);
     }
 }

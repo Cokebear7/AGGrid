@@ -43,8 +43,8 @@ public class CarController {
 //    }
 
     @DeleteMapping (value="/car/{id}")
-    public void deleteCarById(@PathVariable String id){
-        LOG.info(id);
+    public void deleteCarById(@PathVariable Integer id){
+        LOG.info(id.toString());
         carDao.deleteCarById(id);
     }
 }

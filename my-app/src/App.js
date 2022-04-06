@@ -39,7 +39,7 @@ const App = () => {
     // }, []);
 
     useEffect(() => {
-            axios.get('http://localhost:8080/car')
+        axios.get('http://localhost:8080/car')
             .then((resp) => {
                 console.log(resp)
                 console.log(resp.data)
@@ -66,6 +66,34 @@ const App = () => {
         gridRef.current.api.stopEditing();
     }, []);
 
+    // const onBtSave = useCallback(() => {
+    //     gridRef.current.api.stopEditing();
+    //     const selectedNodes = gridRef.current.api.getSelectedNodes()
+    //     const selectedData = selectedNodes.map(node => node.data)
+    //     console.log(selectedData[0])
+    // }, []);
+
+    const onBtDeleteRow = e => {
+        const selectedNodes = gridRef.current.api.getSelectedNodes()
+        const selectedData = selectedNodes.map(node => node.data)
+        // console.log(selectedData);
+        console.log(selectedData[0].id);
+        axios.delete(`http://localhost:8080/car/${selectedData[0].id}`)
+            .then(() => {
+                axios.get('http://localhost:8080/car')
+                    .then((resp) => {
+                        console.log(resp)
+                        console.log(resp.data)
+                        setRowData(resp.data)
+                    })
+                //     .then(() => {
+                //         alert('delete success')
+                //     }
+                // )
+
+            })
+    }
+
     // const onBtStartEditing = useCallback((key, char, pinned) => {
     //     gridRef.current.api.setFocusedCell(0, 'make', pinned);
     //     gridRef.current.api.startEditingCell({
@@ -83,6 +111,8 @@ const App = () => {
             <button onClick={onButtonClick}>Get selected rows</button>
             {/*<button onClick={onBtStartEditing}>edit (0)</button>*/}
             <button onClick={onBtStopEditing}>stop ()</button>
+            {/*<button onClick={onBtSave}>Save Changes</button>*/}
+            <button onClick={onBtDeleteRow}>Delete Selected Row</button>
             <AgGridReact
                 ref={gridRef}
                 rowData={rowData}
