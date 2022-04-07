@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import axios from 'axios';
 import ModalExample from "./modalExample";
+import Modal from 'react-modal'
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -65,7 +66,7 @@ const App = () => {
 
     const onBtStopEditing = e => {
         gridRef.current.api.stopEditing();
-    };
+    }
 
     const onBtSave = e => {
         gridRef.current.api.stopEditing();
@@ -101,6 +102,31 @@ const App = () => {
 
             })
     };
+
+    function createNewCar() {
+        // console.log(document.getElementById('id-input').value)
+        // console.log(document.getElementById('maker-input').value)
+        // console.log(document.getElementById('model-input').value)
+        // console.log(document.getElementById('price-input').value)
+        axios.post('http://localhost:8080/car',
+            {
+                id: document.getElementById('id-input').value,
+                maker: document.getElementById('maker-input').value,
+                model: document.getElementById('model-input').value,
+                price: document.getElementById('price-input').value
+            })
+            .then(() => {
+                axios.get('http://localhost:8080/car')
+                    .then((resp) => {
+                        console.log(resp)
+                        console.log(resp.data)
+                        setRowData(resp.data)
+                    })
+            })
+        // setIsOpen(false);
+        // window.location.reload()
+    }
+
 
     // const onBtStartEditing = useCallback((key, char, pinned) => {
     //     gridRef.current.api.setFocusedCell(0, 'make', pinned);

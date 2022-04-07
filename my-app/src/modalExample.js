@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
+import Modal from 'react-modal'
 import axios from "axios";
 
 const customStyles = {
@@ -21,32 +21,34 @@ const ModalExample = () => {
     let subtitle;
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    function openModal() {
+
+    const openModal = () => {
         setIsOpen(true);
     }
 
-    function afterOpenModal() {
+    const afterOpenModal = () => {
         // references are now sync'd and can be accessed.
         subtitle.style.color = '#f00';
     }
 
-    function closeModal() {
+    const closeModal = () => {
         setIsOpen(false);
     }
 
-    function createNewCar() {
-        console.log(document.getElementById('id-input').value)
-        console.log(document.getElementById('maker-input').value)
-        console.log(document.getElementById('model-input').value)
-        console.log(document.getElementById('price-input').value)
-        // axios.create('http://localhost:8080/car',
-        //     {
-        //         id: document.getElementById('id-input').value,
-        //         maker: document.getElementById('maker-input').value,
-        //         model: document.getElementById('model-input').value,
-        //         price: document.getElementById('price-input').value
-        //     })
-        setIsOpen(false);
+    const createNewCar = () => {
+        // console.log(document.getElementById('id-input').value)
+        // console.log(document.getElementById('maker-input').value)
+        // console.log(document.getElementById('model-input').value)
+        // console.log(document.getElementById('price-input').value)
+        axios.post('http://localhost:8080/car',
+            {
+                id: document.getElementById('id-input').value,
+                maker: document.getElementById('maker-input').value,
+                model: document.getElementById('model-input').value,
+                price: document.getElementById('price-input').value
+            })
+        // setIsOpen(false);
+        window.location.reload()
     }
 
     return (
@@ -67,7 +69,7 @@ const ModalExample = () => {
                     Maker <input id="maker-input"/><br></br>
                     Model <input id="model-input"/><br></br>
                     Price <input id="price-input"/><br></br>
-                    <button type="button" onClick={createNewCar}>Save</button>
+                    <button id="test" type="button" onClick={createNewCar}>Save</button>
                     <button onClick={closeModal}>Close</button>
                 </form>
             </Modal>

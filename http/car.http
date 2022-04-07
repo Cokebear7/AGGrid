@@ -3,7 +3,17 @@
 POST http://localhost:8080/car
 Content-Type: application/x-www-form-urlencoded
 
-id=2&maker=Ford&model=Mondeo2&price=40001
+id=3&maker=Ford&model=Mondeo2&price=40001
+
+###
+
+POST http://localhost:8080/car
+Content-Type: application/json
+
+{"id": 3,
+  "maker": "Ford",
+  "model": "AMondeo",
+  "price": 50000}
 
 ###
 
