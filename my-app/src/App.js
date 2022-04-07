@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import axios from 'axios';
+import ModalExample from "./modalExample";
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -52,7 +53,7 @@ const App = () => {
         const selectedData = selectedNodes.map(node => node.data)
         const selectedDataStringPresentation = selectedData.map(node => `${node.id} ${node.maker} ${node.model} ${node.price}`).join(', ')
         alert(`Selected nodes: ${selectedDataStringPresentation}`)
-    }
+    };
 
     // const onCellClicked = e => {
     //     const selectedNodes = gridRef.current.api.getSelectedNodes()
@@ -62,11 +63,11 @@ const App = () => {
     //     // alert(`Selected nodes: ${selectedData}`)
     // }
 
-    const onBtStopEditing = useCallback(() => {
+    const onBtStopEditing = e => {
         gridRef.current.api.stopEditing();
-    }, []);
+    };
 
-    const onBtSave = useCallback(() => {
+    const onBtSave = e => {
         gridRef.current.api.stopEditing();
         const selectedNodes = gridRef.current.api.getSelectedNodes()
         const selectedData = selectedNodes.map(node => node.data)
@@ -78,7 +79,7 @@ const App = () => {
                 model: selectedData[0].model,
                 price: selectedData[0].price
             })
-    }, []);
+    };
 
     const onBtDeleteRow = e => {
         const selectedNodes = gridRef.current.api.getSelectedNodes()
@@ -99,7 +100,7 @@ const App = () => {
                 // )
 
             })
-    }
+    };
 
     // const onBtStartEditing = useCallback((key, char, pinned) => {
     //     gridRef.current.api.setFocusedCell(0, 'make', pinned);
@@ -120,6 +121,7 @@ const App = () => {
             <button onClick={onBtStopEditing}>stop ()</button>
             <button onClick={onBtSave}>Save Changes</button>
             <button onClick={onBtDeleteRow}>Delete Selected Row</button>
+            <ModalExample></ModalExample>
             <AgGridReact
                 ref={gridRef}
                 rowData={rowData}
