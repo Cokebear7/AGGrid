@@ -3,9 +3,9 @@ package com.yixin.aggrid.resp;
 public class CommonResp<T> {
 
     /**
-     * status code
+     * whether success
      */
-    private Integer statusCode;
+    private boolean success = true;
 
     /**
      * message
@@ -17,12 +17,12 @@ public class CommonResp<T> {
      */
     private T content;
 
-    public Integer getStatusCode() {
-        return statusCode;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {

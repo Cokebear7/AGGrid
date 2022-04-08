@@ -46,13 +46,25 @@ const ModalExample = () => {
                 maker: document.getElementById('maker-input').value,
                 model: document.getElementById('model-input').value,
                 price: document.getElementById('price-input').value
-            })
-        // setIsOpen(false);
-        window.location.reload()
+            }).then((resp) => {
+            console.log(resp);
+            const data = resp.data;
+            if (data.success) {
+                console.log(data.message);
+                window.location.reload();
+            } else {
+                setIsOpen(false);
+                console.log(data.message);
+                alert(data.message)
+            }
+        })
+
+
+        //
     }
 
     return (
-        <div >
+        <div>
             <button onClick={openModal}>Create New Car</button>
             <Modal
                 isOpen={modalIsOpen}

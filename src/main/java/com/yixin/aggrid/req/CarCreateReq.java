@@ -1,14 +1,19 @@
 package com.yixin.aggrid.req;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class CarCreateReq {
+    @NotNull(message = "id is empty")
     private Integer id;
 
+    @NotEmpty(message = "maker is empty")
     private String maker;
 
-//    @NotNull(message = "【名称】不能为空")
+    @NotEmpty(message = "model is empty")
     private String model;
 
-//    @NotNull(message = "【排序】不能为空")
+    @NotNull(message = "price is empty")
     private Integer price;
 
     public Integer getId() {

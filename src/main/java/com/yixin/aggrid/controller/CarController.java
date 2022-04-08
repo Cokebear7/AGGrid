@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class CarController {
     private CarDao carDao;
 
     @PostMapping(value="/car")
-    public CommonResp createNewCar(@RequestBody CarCreateReq req) throws Exception {
+    public CommonResp createNewCar(@Valid @RequestBody CarCreateReq req) throws Exception {
         CommonResp resp = new CommonResp();
         Car car = new Car();
         car.setId(req.getId());
@@ -31,7 +32,7 @@ public class CarController {
         car.setModel(req.getModel());
         car.setPrice(req.getPrice());
         carDao.createNewCar(car);
-        resp.setStatusCode(201);
+//        resp.setStatusCode(201);
         resp.setMessage("new car created");
         return resp;
     }
@@ -57,7 +58,7 @@ public class CarController {
             listResp.add(temp);
         }
 //        if (listCar.size() >= 0) {
-            resp.setStatusCode(200);
+//            resp.setStatusCode(200);
             resp.setMessage("OK");
             resp.setContent(listResp);
 //        }
@@ -73,7 +74,7 @@ public class CarController {
         car.setModel(req.getModel());
         car.setPrice(req.getPrice());
         carDao.updateCar(car);
-        resp.setStatusCode(200);
+//        resp.setStatusCode(200);
         resp.setMessage("car info updated");
         return resp;
     }
@@ -83,7 +84,7 @@ public class CarController {
         CommonResp resp = new CommonResp();
         LOG.info(id.toString());
         carDao.deleteCarById(id);
-        resp.setStatusCode(200);
+//        resp.setStatusCode(200);
         resp.setMessage("car deleted");
         return resp;
     }
