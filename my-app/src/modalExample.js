@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal'
 import axios from "axios";
+import {message} from "antd";
 
 const customStyles = {
     content: {
@@ -55,7 +56,7 @@ const ModalExample = () => {
             } else {
                 setIsOpen(false);
                 console.log(data.message);
-                alert(data.message)
+                message.error(data.message)
             }
         })
 
