@@ -2,6 +2,8 @@ package com.yixin.aggrid.dao;
 
 import com.yixin.aggrid.config.AgGridApplication;
 import com.yixin.aggrid.model.Car;
+import com.yixin.aggrid.resp.CarQueryResp;
+import com.yixin.aggrid.resp.CommonResp;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -33,20 +36,23 @@ public class CarDao {
     /**
      * Read
      */
-//    public CarModel findCarByName(String name) {
-//        Query query=new Query(Criteria.where("name").is(name));
-//        MongoTest mgt =  mongoTemplate.findOne(query , MongoTest.class);
-//        return mgt;
-//    }
     public List<Car> getAllCars() {
         List<Car> listCar = mongoTemplate.findAll(Car.class);
-//        Query query = new Query();
-//        query.with(new Sort(Sort.Direction.DESC, "_id"));
-//
-//        List<Car> listCar=  mongoTemplate.find(query, Car.class);
-//        LOG.info(listCar.get(0).toString());
         return listCar;
     }
+//    public List<CarQueryResp> getAllCars() {
+//        List<CarQueryResp> listCar = new ArrayList<>();
+//        List<Car> findResult = mongoTemplate.findAll(Car.class);
+//        for (Car car : findResult) {
+//            CarQueryResp resp = new CarQueryResp();
+//            resp.setId(car.getId());
+//            resp.setMaker(car.getMaker());
+//            resp.setModel(car.getModel());
+//            resp.setPrice(car.getPrice());
+//            listCar.add(resp);
+//        }
+//        return listCar;
+//    }
 
     /**
      * Update

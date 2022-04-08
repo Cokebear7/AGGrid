@@ -45,7 +45,7 @@ const App = () => {
             .then((resp) => {
                 console.log(resp)
                 console.log(resp.data)
-                setRowData(resp.data)
+                setRowData(resp.data.content)
             })
     }, []);
 
@@ -93,7 +93,7 @@ const App = () => {
                     .then((resp) => {
                         console.log(resp)
                         console.log(resp.data)
-                        setRowData(resp.data)
+                        setRowData(resp.data.content)
                     })
                 //     .then(() => {
                 //         alert('delete success')
@@ -120,7 +120,7 @@ const App = () => {
                     .then((resp) => {
                         console.log(resp)
                         console.log(resp.data)
-                        setRowData(resp.data)
+                        setRowData(resp.data.content)
                     })
             })
         // setIsOpen(false);
