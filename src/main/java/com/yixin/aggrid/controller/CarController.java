@@ -23,13 +23,17 @@ public class CarController {
     private CarDao carDao;
 
     @PostMapping(value="/car")
-    public void createNewCar(@RequestBody CarCreateReq req) throws Exception {
+    public CommonResp createNewCar(@RequestBody CarCreateReq req) throws Exception {
+        CommonResp resp = new CommonResp();
         Car car = new Car();
         car.setId(req.getId());
         car.setMaker(req.getMaker());
         car.setModel(req.getModel());
         car.setPrice(req.getPrice());
         carDao.createNewCar(car);
+        resp.setStatusCode(201);
+        resp.setMessage("new car created");
+        return resp;
     }
 
 //    @GetMapping(value="/car")
@@ -61,18 +65,26 @@ public class CarController {
     }
 
     @PutMapping(value="/car")
-    public void updateCar(@RequestBody CarSaveReq req){
+    public CommonResp updateCar(@RequestBody CarSaveReq req){
+        CommonResp resp = new CommonResp();
         Car car = new Car();
         car.setId(req.getId());
         car.setMaker(req.getMaker());
         car.setModel(req.getModel());
         car.setPrice(req.getPrice());
         carDao.updateCar(car);
+        resp.setStatusCode(200);
+        resp.setMessage("car info updated");
+        return resp;
     }
 
     @DeleteMapping (value="/car/{id}")
-    public void deleteCarById(@PathVariable Integer id){
+    public CommonResp deleteCarById(@PathVariable Integer id){
+        CommonResp resp = new CommonResp();
         LOG.info(id.toString());
         carDao.deleteCarById(id);
+        resp.setStatusCode(200);
+        resp.setMessage("car deleted");
+        return resp;
     }
 }
