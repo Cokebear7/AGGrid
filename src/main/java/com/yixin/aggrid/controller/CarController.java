@@ -26,13 +26,17 @@ public class CarController {
     @PostMapping(value="/car")
     public CommonResp createNewCar(@Valid @RequestBody CarCreateReq req) throws Exception {
         CommonResp resp = new CommonResp();
+        if (carDao.searchById(req.getId()) != null) {
+            resp.setSuccess(false);
+            resp.setMessage("car id already been used");
+            return resp;
+        };
         Car car = new Car();
         car.setId(req.getId());
         car.setMaker(req.getMaker());
         car.setModel(req.getModel());
         car.setPrice(req.getPrice());
         carDao.createNewCar(car);
-//        resp.setStatusCode(201);
         resp.setMessage("new car created");
         return resp;
     }
@@ -57,24 +61,30 @@ public class CarController {
             LOG.info(temp.toString());
             listResp.add(temp);
         }
-//        if (listCar.size() >= 0) {
-//            resp.setStatusCode(200);
+        if (listCar.size() > 0) {
             resp.setMessage("OK");
-            resp.setContent(listResp);
-//        }
+        } else {
+            resp.setSuccess(false);
+            resp.setMessage("Nothing to display");
+        }
+        resp.setContent(listResp);
         return resp;
     }
 
     @PutMapping(value="/car")
-    public CommonResp updateCar(@RequestBody CarSaveReq req){
+    public CommonResp updateCar(@Valid @RequestBody CarSaveReq req){
         CommonResp resp = new CommonResp();
+        if (carDao.searchById(req.getId()) == null) {
+            resp.setSuccess(false);
+            resp.setMessage("car doesn't exist");
+            return resp;
+        };
         Car car = new Car();
         car.setId(req.getId());
         car.setMaker(req.getMaker());
         car.setModel(req.getModel());
         car.setPrice(req.getPrice());
         carDao.updateCar(car);
-//        resp.setStatusCode(200);
         resp.setMessage("car info updated");
         return resp;
     }
@@ -82,9 +92,12 @@ public class CarController {
     @DeleteMapping (value="/car/{id}")
     public CommonResp deleteCarById(@PathVariable Integer id){
         CommonResp resp = new CommonResp();
-        LOG.info(id.toString());
+        if (carDao.searchById(id) == null) {
+            resp.setSuccess(false);
+            resp.setMessage("nothing to delete");
+            return resp;
+        };
         carDao.deleteCarById(id);
-//        resp.setStatusCode(200);
         resp.setMessage("car deleted");
         return resp;
     }

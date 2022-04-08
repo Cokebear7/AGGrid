@@ -47,18 +47,19 @@ const ModalExample = () => {
                 maker: document.getElementById('maker-input').value,
                 model: document.getElementById('model-input').value,
                 price: document.getElementById('price-input').value
-            }).then((resp) => {
-            console.log(resp);
-            const data = resp.data;
-            if (data.success) {
-                console.log(data.message);
-                window.location.reload();
-            } else {
-                setIsOpen(false);
-                console.log(data.message);
-                message.error(data.message)
-            }
-        })
+            })
+            .then((resp) => {
+                console.log(resp);
+                const data = resp.data;
+                if (data.success) {
+                    console.log(data.message);
+                    window.location.reload();
+                } else {
+                    // setIsOpen(false);
+                    console.log(data.message);
+                    message.error(data.message)
+                }
+            })
 
 
         //

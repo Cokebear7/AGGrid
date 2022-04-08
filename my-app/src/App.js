@@ -3,6 +3,7 @@ import {AgGridReact} from 'ag-grid-react';
 import axios from 'axios';
 import ModalExample from "./modalExample";
 import Modal from 'react-modal'
+import {message} from "antd";
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -43,9 +44,11 @@ const App = () => {
     useEffect(() => {
         axios.get('http://localhost:8080/car')
             .then((resp) => {
-                console.log(resp)
-                console.log(resp.data)
-                setRowData(resp.data.content)
+                const data = resp.data;
+                if (!data.success) {
+                    message.error(data.message);
+                }
+                setRowData(data.content);
             })
     }, []);
 
@@ -80,6 +83,14 @@ const App = () => {
                 model: selectedData[0].model,
                 price: selectedData[0].price
             })
+            .then((resp) => {
+                const data = resp.data;
+                if (data.success) {
+                    message.success(data.message);
+                } else {
+                    message.error(data.message);
+                }
+            })
     };
 
     const onBtDeleteRow = e => {
@@ -88,13 +99,20 @@ const App = () => {
         // console.log(selectedData);
         console.log(selectedData[0].id);
         axios.delete(`http://localhost:8080/car/${selectedData[0].id}`)
-            .then(() => {
-                axios.get('http://localhost:8080/car')
-                    .then((resp) => {
-                        console.log(resp)
-                        console.log(resp.data)
-                        setRowData(resp.data.content)
-                    })
+            .then((resp) => {
+                const data = resp.data;
+                if (data.success) {
+                    axios.get('http://localhost:8080/car')
+                        .then((resp) => {
+                            setRowData(resp.data.content)
+                        }).then(() => {
+                            message.success(data.message);
+                        }
+                    )
+                } else {
+                    message.error(data.message);
+                }
+
                 //     .then(() => {
                 //         alert('delete success')
                 //     }

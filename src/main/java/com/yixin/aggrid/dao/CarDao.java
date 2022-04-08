@@ -40,6 +40,12 @@ public class CarDao {
         List<Car> listCar = mongoTemplate.findAll(Car.class);
         return listCar;
     }
+
+    public Car searchById(Integer id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        //update first result
+        return mongoTemplate.findOne(query,Car.class);
+    }
 //    public List<CarQueryResp> getAllCars() {
 //        List<CarQueryResp> listCar = new ArrayList<>();
 //        List<Car> findResult = mongoTemplate.findAll(Car.class);

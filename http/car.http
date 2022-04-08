@@ -10,10 +10,10 @@ id=3&maker=Ford&model=Mondeo2&price=40001
 POST http://localhost:8080/car
 Content-Type: application/json
 
-{"id": 331,
+{"id": 1,
   "maker": "Ford",
   "model": "AMondeo",
-  "price": 50000}
+  "price": 1}
 
 ###
 
