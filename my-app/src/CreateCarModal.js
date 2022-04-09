@@ -42,13 +42,10 @@ const CreateCarModal = () => {
                 price: document.getElementById('price-input').value
             })
             .then((resp) => {
-                console.log(resp);
                 const data = resp.data;
                 if (data.success) {
-                    console.log(data.message);
                     window.location.reload();
                 } else {
-                    console.log(data.message);
                     message.error(data.message)
                 }
             })

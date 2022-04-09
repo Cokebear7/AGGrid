@@ -39,7 +39,6 @@ const App = () => {
         gridRef.current.api.stopEditing();
         const selectedNodes = gridRef.current.api.getSelectedNodes()
         const selectedData = selectedNodes.map(node => node.data)
-        console.log(selectedData[0])
         axios.put('http://localhost:8080/car',
             {
                 id: selectedData[0].id,
@@ -60,8 +59,6 @@ const App = () => {
     const onBtDeleteRow = e => {
         const selectedNodes = gridRef.current.api.getSelectedNodes()
         const selectedData = selectedNodes.map(node => node.data)
-        // console.log(selectedData);
-        console.log(selectedData[0].id);
         axios.delete(`http://localhost:8080/car/${selectedData[0].id}`)
             .then((resp) => {
                 const data = resp.data;

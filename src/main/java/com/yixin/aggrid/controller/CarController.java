@@ -8,8 +8,9 @@ import com.yixin.aggrid.resp.CarQueryResp;
 import com.yixin.aggrid.resp.CommonResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ public class CarController {
 
     private static final Logger LOG = LoggerFactory.getLogger(CarController.class);
 
-    @Autowired
+    @Resource
     private CarDao carDao;
 
     @PostMapping(value="/car")
-    public CommonResp createNewCar(@Valid @RequestBody CarCreateReq req) throws Exception {
+    public CommonResp createNewCar(@Valid @RequestBody CarCreateReq req){
         CommonResp resp = new CommonResp();
         if (carDao.searchById(req.getId()) != null) {
             resp.setSuccess(false);
@@ -41,12 +42,6 @@ public class CarController {
         return resp;
     }
 
-//    @GetMapping(value="/car")
-//    public List<Car> getAllCars(){
-//        List<Car> listCar= carDao.getAllCars();
-//        return listCar;
-//    }
-
     @GetMapping(value="/car")
     public CommonResp getAllCars(){
         CommonResp resp = new CommonResp();
@@ -58,7 +53,6 @@ public class CarController {
             temp.setMaker(car.getMaker());
             temp.setModel(car.getModel());
             temp.setPrice(car.getPrice());
-            LOG.info(temp.toString());
             listResp.add(temp);
         }
         if (listCar.size() > 0) {
