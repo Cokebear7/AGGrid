@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
+import React, {useState} from 'react';
 import Modal from 'react-modal'
 import axios from "axios";
-import {message} from "antd";
+import {Button, message} from "antd";
+import {FolderAddFilled} from "@ant-design/icons";
+
 
 const customStyles = {
     content: {
@@ -15,20 +16,16 @@ const customStyles = {
     },
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-// Modal.setAppElement('#createForm');
 
-const ModalExample = () => {
+const CreateCarModal = () => {
     let subtitle;
     const [modalIsOpen, setIsOpen] = useState(false);
-
 
     const openModal = () => {
         setIsOpen(true);
     }
 
     const afterOpenModal = () => {
-        // references are now sync'd and can be accessed.
         subtitle.style.color = '#f00';
     }
 
@@ -37,10 +34,6 @@ const ModalExample = () => {
     }
 
     const createNewCar = () => {
-        // console.log(document.getElementById('id-input').value)
-        // console.log(document.getElementById('maker-input').value)
-        // console.log(document.getElementById('model-input').value)
-        // console.log(document.getElementById('price-input').value)
         axios.post('http://localhost:8080/car',
             {
                 id: document.getElementById('id-input').value,
@@ -55,19 +48,15 @@ const ModalExample = () => {
                     console.log(data.message);
                     window.location.reload();
                 } else {
-                    // setIsOpen(false);
                     console.log(data.message);
                     message.error(data.message)
                 }
             })
-
-
-        //
     }
 
     return (
         <div>
-            <button onClick={openModal}>Create New Car</button>
+            <Button icon={<FolderAddFilled/>} onClick={openModal}>Create New Car</Button>
             <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}
@@ -75,22 +64,23 @@ const ModalExample = () => {
                 style={customStyles}
                 contentLabel="Example Modal"
             >
-                <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Input Information for a new car</h2>
+                <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
+                    Input Information for a new car
+                </h2>
 
-                {/*<div>Input Information for a new car</div>*/}
                 <form>
-                    ID <input id="id-input"/><br></br>
+                    CarID <input id="id-input"/><br></br>
                     Maker <input id="maker-input"/><br></br>
                     Model <input id="model-input"/><br></br>
                     Price <input id="price-input"/><br></br>
                     <button id="test" type="button" onClick={createNewCar}>Save</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <button onClick={closeModal}>Close</button>
                 </form>
+
             </Modal>
         </div>
     );
 }
 
-// ReactDOM.render(<ModalExample />, ModalExample);
-
-export default ModalExample;
+export default CreateCarModal;
